@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" >
+  <meta name="description" content="プログラミング学習">
+  <title>javascript課題1-1</title>
+</head>
+<body>
+
+<script>
+
+let str = new Array( 2 );
+const tasks = {
+	'掃除': '机を片づける', 
+	'買い物': '牛乳を買う',
+	'運動': '散歩する' };
+
+/* タスク一覧表示関数 */
+const showTask = (tasks) => {
+    let count = 0;
+
+	console.log('==========================');
+	console.log('現在持っているタスク一覧');
+	console.log('==========================');
+
+	for(let k in tasks){
+    	console.log(count + ' : ' + '[内容]' + tasks[k] + ',' + '[ジャンル]' + k);
+		count++;
+	}
+};
+
+
+/*  本処理   */
+
+showTask(tasks);
+
+str[0] = prompt('タスクを入力してください');
+str[1] = prompt('ジャンルを入力してください');
+
+
+if( str[0] !== null && str[1] !== null ){
+
+	tasks[str[0]] = str[1];
+	showTask(tasks);
+}
+
+prompt('「確認,追加,削除,終了」の４つのいずれかを入力してください');
+
+
+</script>
+</body>
+</html>
+
