@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8" >
+	<meta name="description" content="プログラミング学習">
+	<title>javascript課題2</title>
+
+</head>
+<body>
+
+<h1>FizzBuzz問題</h1>
+
+<p>FizzNum: <input type="text" placeholder="整数値を入力してください" size="30" style="margin-left:7px;"></p>
+<p>BuzzNum: <input type="text" placeholder="整数値を入力してください" size="30"></p>
+
+<button type="button" name="button" onclick="FizzBuzz()">実行</button>
+
+<p style="font-size:20px; margin" id="abc" >【出力】</p>
+
+
+<script>
+
+/* FizzBuzz表示関数 */
+const FizzBuzz = function () {
+	let elems;
+	let num = new Array(2);
+	let result ;
+	
+	
+	//実行結果が既にあれば削除する
+	if(document.getElementById("fizzbuzzbox") != null){
+		document.getElementById("fizzbuzzbox").remove() ;
+	}
+	
+	//ユーザ入力値を取得する
+	elems = document.getElementsByTagName("input");
+    num[0] = elems[0].value;
+    num[1] = elems[1].value;
+
+	//表示用のdivタグ生成
+	let box = document.createElement('div');
+    box.id = 'fizzbuzzbox';    
+	
+	//ユーザ入力チェック
+	result = checkNum(num);
+	
+	//チェック結果に応じて処理実行
+	if(result === 1){
+		let p = document.createElement('p');
+		p.textContent = '整数値を入力してください';
+		box.appendChild(p);
+
+	} else if(result === 2){	
+		for(let i= 1 ; i < 100 ; i++) {	
+			let p = document.createElement('p');
+			p.style = "margin: 5px 0;"
+			if( i % num[0] === 0  &&  i % num[1] === 0 ){
+				p.textContent = 'FizzBuzz ' + i;
+			} else if ( i % num[0] === 0) {
+				p.textContent = 'Fizz ' + i;
+			} else if ( i % num[1] === 0) {
+				p.textContent = 'Buzz ' + i;
+			}
+			box.appendChild(p);
+		}
+	}
+	document.body.appendChild(box);
+}
+
+
+/*  ユーザ入力チェック関数  */
+const checkNum = function(num) {
+
+	for(let i = 0 ; i < num.length ; i++ ){
+
+		//文字列判定：数値変換し結果がNaNかどうかで判定
+		if(Number.isNaN(Number(num[i]))){
+			return 1;
+
+		//空白判定
+		} else if( !num[i] ){
+		    return 1;
+
+		//少数判定
+		} else if (Number.isInteger(Number(num[i])) === false){
+		    return 1;
+		}
+	}
+    return 2;
+}
+
+</script>
+</body>
+</html>
+
+
+
