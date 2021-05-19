@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8" >
+	<meta name="description" content="プログラミング学習">
+	<title>javascript課題2</title>
+
+</head>
+<body>
+
+<h1>FizzBuzz問題</h1>
+
+<p>FizzNum: <input type="text" placeholder="整数値を入力してください" size="30" style="margin-left:7px;"></p>
+<p>BuzzNum: <input type="text" placeholder="整数値を入力してください" size="30"></p>
+
+<button type="button" name="button" id="execution">実行</button>
+
+<p style="font-size:20px; margin" id="abc" >【出力】</p>
+
+
+<script>
+
+/* FizzBuzz表示関数 */
+document.getElementById('execution').onclick = function () {
+	const input_box = document.getElementsByTagName('input');
+	const input_value = [input_box[0].value,input_box[1].value];
+	
+	//実行結果が既にあれば削除する
+	if (document.getElementById('fizzbuzzbox') != null) {
+		document.getElementById('fizzbuzzbox').remove() ;
+	}
+		
+	//入力チェック
+	const result = checkNum(input_value);
+
+	//表示用のdivタグ生成
+	const box = document.createElement('div');
+    box.id = 'fizzbuzzbox';    
+
+	//チェック結果に応じて処理実行
+	if (result === false) {
+		const p = document.createElement('p');
+		p.textContent = '整数値を入力してください';
+		box.appendChild(p);
+
+	} else if (result === true) {	
+
+		//入力された２つの整数値より、FizzBuzzを１～９９まで表示する
+		for (let i= 1 ; i < 100 ; i++) {	
+			const p = document.createElement('p');
+			p.style = 'margin: 5px 0;'
+			
+			// iが2つの整数値の倍数である時
+			if (i % Number(input_value[0]) === 0  &&  i % Number(input_value[1]) === 0) {
+				p.textContent = 'FizzBuzz ' + i;
+
+			//  iが最初に入力された整数値の倍数である時
+			} else if (i % Number(input_value[0]) === 0) {
+				p.textContent = 'Fizz ' + i;
+
+			//  iが2つ目にに入力された整数値の倍数である時
+			} else if (i % Number(input_value[1]) === 0) {
+				p.textContent = 'Buzz ' + i;
+			}
+			box.appendChild(p);
+		}
+	}
+	document.body.appendChild(box);
+}
+
+
+/*  ユーザ入力チェック関数  */
+const checkNum = function(input_value) {
+
+	for (let i = 0 ; i < input_value.length ; i++ ) {
+
+		//文字列判定：数値変換し結果がNaNかどうかで判定
+		if (Number.isNaN(Number(input_value[i]))) {
+			return false;
+
+		//空白判定
+		} else if (!input_value[i]) {
+		    return false;
+
+		//少数判定
+		} else if (Number.isInteger(Number(input_value[i])) === false) {
+		    return false;
+		}
+	}
+    return true;
+}
+
+</script>
+</body>
+</html>
+
+
+
