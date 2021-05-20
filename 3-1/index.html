@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8" >
+	<meta name="description" content="プログラミング学習">
+	<title>javascript課題3</title>
+
+</head>
+<body>
+
+<h1>ToDoリスト</h1>
+
+<label><input type="radio" name="radio" value="はい" checked> すべて</label>
+<label><input type="radio" name="radio" value="作業中"> 作業中</label>
+<label><input type="radio" name="radio" value="完了"> 完了</label>
+
+<table id="taskList" style="border:none;">
+	<tr>
+		<th>ID</th>
+		<th>コメント</th>
+		<th>状態</th>
+		<th></th>
+	</th>
+</table>
+
+<h2>新規タスクの追加</h2>
+
+<input type="text" size="20" id="input">
+<button type="button" name="button" id="taskAdd">追加</button>
+
+
+<script>
+
+document.getElementById('taskAdd').onclick = function () {
+
+	//タスク内ボタン定義
+	const inWork = '<button type="button" name="button" id="inWork" style="margin: 2px;">作業中</button>' ;
+	const deletion = '<button type="button" name="button" id="delete" style="margin: 2px;">削除</button>' ;
+
+	//入力値取得
+	const input_value = document.getElementById('input').value ;
+
+	//テーブル要素取得
+	const task_table = document.getElementById('taskList') ;
+	
+	//ｔｒ、ｔｈタグの生成
+	const task_row = task_table.insertRow(-1) ;
+	const task_cell_ID = task_row.insertCell(0) ;
+	const task_cell_comment = task_row.insertCell(1) ;
+	const task_cell_status = task_row.insertCell(2) ;
+	const task_cell_delete = task_row.insertCell(3) ;
+
+	//タスク内容設定
+	task_cell_ID.innerHTML = task_table.rows.length -1 ;
+	task_cell_comment.innerHTML = input_value ;
+	task_cell_status.innerHTML = inWork ;
+	task_cell_delete.innerHTML = deletion ;
+
+	//コメント入力欄のクリア
+	document.getElementById('input').value = '' ;
+}
+
+</script>
+</body>
+</html>
+
