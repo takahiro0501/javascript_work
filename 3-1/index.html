@@ -28,74 +28,8 @@
 <input type="text" size="20" id="input">
 <button type="button" name="button" id="taskAdd">追加</button>
 
+<script type="text/javascript" src="script.js"></script>
 
-<script>
-
-//タスク管理用配列を定義
-const todos = [];
-
-//タスク表示用のテーブルタグ取得
-const task_tbl = document.getElementById('taskList') ;
-
-
-/*
-新規タスクの「追加」ボタン押下時の動作
-*/
-document.getElementById('taskAdd').onclick = function () {
-
-	//一時的にタスクを格納する作業用配列を定義
-	let todo =[];
-
-	//入力されたタスク内容取得
-	const input_value = document.getElementById('input').value ;
-
-	//取得した内容を作業用配列に代入
-  todo = {
-							task: `${input_value}` , 
-  						state: '作業中' 
-					};
-
-	//作業用配列をタスク管理用配列に格納
-	todos.push(todo);
-
-	//格納されたタスクを表示
-	displayTodos(todo,todos.length-1);
-
-	//入力欄のクリア
-	document.getElementById('input').value = '' ;
-
-}
-
-
-/*
-タスク内容表示関数
-*/
-const displayTodos = function (todo,task_ID) {
-
-	//タスク内ボタン定義
-	const state_btn = document.createElement('button') ;
-	const deletion_btn = document.createElement('button') ;
-
-	//ｔｒ、ｔｈタグの生成
-	const task_row = task_tbl.insertRow() ;
-	const task_cell_ID = task_row.insertCell(0) ;
-	const task_cell_comment = task_row.insertCell(1) ;
-	const task_cell_status = task_row.insertCell(2) ;
-	const task_cell_delete = task_row.insertCell(3) ;	
-		
-	//button内容設定
-	state_btn.innerHTML = todo.state ;
-	deletion_btn.innerHTML = '削除' ;
-
-	//タスク内容設定
-	task_cell_ID.innerHTML = task_ID ;
-	task_cell_comment.innerHTML = todo.task ;
-	task_cell_delete.appendChild(deletion_btn) ;
-	task_cell_status.appendChild(state_btn) ;
-
-}
-
-</script>
 </body>
 </html>
 
