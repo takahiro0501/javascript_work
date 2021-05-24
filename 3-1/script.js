@@ -14,10 +14,16 @@ document.getElementById('taskAdd').onclick = function () {
 	//入力されたタスク内容取得
 	const inputValue = document.getElementById('input').value ;
 
+	//空文字チェック
+	if (inputValue == '') {
+		alert('タスクを入力してください')
+		return false;
+	}
+
 	//取得した内容を作業用配列に代入
 	const todo = {
-										task: inputValue ,
-										state: '作業中'
+									task: inputValue ,
+									state: '作業中'
 								};
 
 	//作業用配列をタスク管理用配列に格納
