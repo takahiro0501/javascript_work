@@ -15,16 +15,16 @@ document.getElementById('taskAdd').onclick = function () {
 	const inputValue = document.getElementById('input').value ;
 
 	//空文字チェック
-	if (inputValue == '') {
+	if (inputValue === '') {
 		alert('タスクを入力してください')
-		return false;
+		return false ;
 	}
 
 	//取得した内容を作業用配列に代入
 	const todo = {
-									task: inputValue ,
-									state: '作業中'
-								};
+					task: inputValue , 
+					state: '作業中' 
+				};
 
 	//作業用配列をタスク管理用配列に格納
 	todos.push(todo);
@@ -34,6 +34,28 @@ document.getElementById('taskAdd').onclick = function () {
 
 	//入力欄のクリア
 	document.getElementById('input').value = '' ;
+
+}
+
+
+/*
+「削除」ボタン押下時の動作
+*/
+const deleteTodo = function (button) {
+
+	//削除対象の行番号を取得
+	const targetId = button.parentNode.parentNode.sectionRowIndex ;
+
+	//タスク管理用配列から対象のタスクを削除
+	todos.splice(targetId-1, 1) ;
+
+	//表示されているタスクから対象のタスクを削除
+	taskTable.deleteRow(targetId) ;
+
+	//idの降り直し
+  for (let n = targetId ; n < taskTable.rows.length ; n++) {
+		taskTable.rows[n].cells[0].textContent = n-1 ;
+	}
 
 }
 
@@ -77,6 +99,7 @@ const createStateBtn = function (state) {
 const createDeleteBtn = function () {
 
 	const deletionBtn = document.createElement('button') ;
+	deletionBtn.onclick = function () { deleteTodo(this); } ;
 	deletionBtn.textContent = '削除' ;
 
 	return deletionBtn ;
