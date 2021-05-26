@@ -61,6 +61,27 @@ const deleteTodo = function (button) {
 
 
 /*
+状態（作業中、完了）ボタン押下時の動作
+*/
+const changeState = function (button) {
+	
+	//対象の行番号を取得
+	const targetId = button.parentNode.parentNode.sectionRowIndex ;
+
+	//対象タスクが「作業中」なら「完了」へ変更
+	if (todos[targetId-1].state === '作業中') {
+		taskTable.rows[targetId].cells[2].firstChild.textContent = '完了' ;
+		todos[targetId-1].state = '完了' ;
+
+	//対象タスクが「完了」なら「作業中」へ変更
+	} else if (todos[targetId-1].state === '完了') {
+		taskTable.rows[targetId].cells[2].firstChild.textContent = '作業中' ;
+		todos[targetId-1].state = '作業中' ;
+	}
+}
+
+
+/*
 タスク内容表示関数
 */
 const displayTodos = function (todo,taskId) {
@@ -87,6 +108,7 @@ const displayTodos = function (todo,taskId) {
 const createStateBtn = function (state) {
 
 	const stateBtn = document.createElement('button') ;
+	stateBtn.onclick = function () { changeState(this); } ;
 	stateBtn.textContent = state ;
 
 	return stateBtn ;
