@@ -53,7 +53,7 @@ const deleteTodo = function (button) {
 	taskTable.deleteRow(targetId) ;
 
 	//idの降り直し
-  for (let n = targetId ; n < taskTable.rows.length ; n++) {
+	for (let n = targetId ; n < taskTable.rows.length ; n++) {
 		taskTable.rows[n].cells[0].textContent = n-1 ;
 	}
 
