@@ -5,6 +5,53 @@ const todos = [];
 //タスク表示用のテーブルタグ取得
 const taskTable = document.getElementById('taskList') ;
 
+//タスクの表示/非表示を管理するラジオボタンタグ取得
+const radioGroup = document.getElementsByName('radio') ;
+
+
+/*
+ラジオボタンにイベントを設定
+*/
+window.onload = function() {
+
+	radioGroup.forEach (function(e) {
+
+		e.addEventListener('change', function() {
+
+			//タスクを表示しているテーブル行を取得
+			const taskRows = taskTable.getElementsByTagName("tr") ;
+
+			//ラジオボタンで「すべて」が選択された時、すべてのタスクを表示
+			if (e.value === 'すべて') {
+				for (let i in todos) {
+					taskRows[Number(i)+1].hidden = false ;
+				}
+
+			//「作業中」が選択された時、状態が「作業中」のタスクのみを表示
+			} else if (e.value === '作業中') {
+				for (let i in todos) {
+					if (todos[i].state === '作業中') {
+						taskRows[Number(i)+1].hidden = false ;
+					} else {
+						taskRows[Number(i)+1].hidden = true ;
+					}
+				}
+
+			//「完了」が選択された時、状態が「完了」のタスクのみを表示
+			} else if (e.value === '完了') {
+				for (let i in todos) {
+					if (todos[i].state === '完了') {
+						taskRows[Number(i)+1].hidden = false ;
+					} else {
+						taskRows[Number(i)+1].hidden = true ;
+					}
+				}
+			}
+		});
+	});
+
+}
+
 
 /*
 新規タスクの「追加」ボタン押下時の動作
@@ -98,6 +145,15 @@ const displayTodos = function (todo,taskId) {
 	taskCellComment.textContent = todo.task ;
 	taskCellStatus.appendChild(createStateBtn(todo.state)) ;
 	taskCellDelete.appendChild(createDeleteBtn()) ;
+	
+	//ラジオボタンの状態を取得し、タスク状態と差異があれば非表示とする
+	radioGroup.forEach (function(e) {
+		if (e.checked) {
+			if (e.value !== 'すべて'　&& e.value !== todo.state) {
+				taskRow.hidden = true ;
+			}
+		}
+	});
 
 }
 
