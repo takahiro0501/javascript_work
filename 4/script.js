@@ -59,38 +59,34 @@ class Quiz {
 /*
 「開始」ボタン押下時の動作
 */
-document.getElementById('start').addEventListener('click', function () {
+document.getElementById('start').addEventListener('click', async () => {
 
   document.getElementById('title').textContent = '取得中';
   document.getElementById('quiz').textContent = '少々お待ちください';
   document.getElementById('start').remove();
 
-  fetch(url)
-    .then((response) => {
-      return response.json();
-    })
-    .then(data => {
-      quizData = data.results;
-      const quiz = new Quiz(quizData);
-      makeQuiz(quiz);
-    })
-    .catch(error => {
-      console.log("失敗しました");
-    });
+  try {
+    const response = await fetch(url);
+    const quizData = (await response.json()).results;
+    const quiz = new Quiz(quizData);
+    makeQuiz(quiz);
+  } catch (e) {
+    console.log("失敗しました");
+  }
 });
 
 /*
 クイズ画面の生成関数
 */
-const makeQuiz = function (quiz) {
+const makeQuiz = (quiz) => {
   //初回のみ必要な要素を追加
   if (quiz.getQuizIndex() === 0) {
     const genreBtn = document.createElement('h3');
     const levelBtn = document.createElement('h3');
     genreBtn.id = 'genre';
     levelBtn.id = 'level';
-    subtitle_box.appendChild(genreBtn);
-    subtitle_box.appendChild(levelBtn);
+    subtitleBox.appendChild(genreBtn);
+    subtitleBox.appendChild(levelBtn);
   }
 
   //回答ボタン以外の文言の設定
@@ -154,9 +150,9 @@ const setFinalPage = function (quiz) {
 function arrayShuffle(array) {
   for (let i = (array.length - 1); 0 < i; i--) {
     // 0〜(i+1)の範囲で値を取得
-    var r = Math.floor(Math.random() * (i + 1));
+    const r = Math.floor(Math.random() * (i + 1));
     // 要素の並び替えを実行
-    let tmp = array[i];
+    const tmp = array[i];
     array[i] = array[r];
     array[r] = tmp;
   }
